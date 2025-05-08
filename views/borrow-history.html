@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lịch sử mượn trả</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+  <!-- Header -->
+  <div class="public-header">
+    <div class="menu-container">
+      <div class="user-menu" onclick="toggleMenu()">
+        <i class="fas fa-user-circle user-avatar"></i>
+        <span id="usernameDisplay" class="user-name">Độc giả</span>
+      </div>
+      <i class="fas fa-bars hamburger-menu" onclick="toggleMenu()"></i>
+      <div class="dropdown">
+        <div class="dropdown-content">
+          <a href="public.html">Trang chủ</a>
+          <a href="borrow-history.html">Lịch sử mượn trả</a>
+          <a href="#" onclick="logout()">Đăng xuất</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-content-public">
+    <h1>Lịch sử mượn trả</h1>
+    
+    <div class="search-bar">
+      <input type="text" id="searchLoanInput" placeholder="Tìm kiếm phiếu mượn" />
+      <i class="fas fa-search search-icon" onclick="searchLoans()"></i>
+    </div>
+
+    <div class="borrow-history-table">
+      <table class="account-table">
+        <thead>
+          <tr>
+            <th>Mã phiếu mượn</th>
+            <th>Ngày mượn</th>
+            <th>Ngày trả dự kiến</th>
+            <th>Ngày trả</th>
+            <th>Tổng tiền cọc</th>
+            <th>Tình trạng</th>
+            <th>Thao tác</th>
+          </tr>
+        </thead>
+        <tbody id="borrowHistoryTable">
+          <!-- Dữ liệu sẽ được thêm vào đây bằng JavaScript -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal chi tiết phiếu mượn -->
+  <div id="loanDetailsModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>Thông tin phiếu mượn</h2>
+      
+      <div class="loan-info-grid">
+        <div class="loan-info-row">
+          <div class="loan-info-label">Mã phiếu mượn:</div>
+          <div class="loan-info-value" id="modalLoanId"></div>
+        </div>
+        <div class="loan-info-row">
+          <div class="loan-info-label">Ngày mượn:</div>
+          <div class="loan-info-value" id="modalBorrowDate"></div>
+        </div>
+        <div class="loan-info-row">
+          <div class="loan-info-label">Ngày trả dự kiến:</div>
+          <div class="loan-info-value" id="modalDueDate"></div>
+        </div>
+        <div class="loan-info-row">
+          <div class="loan-info-label">Tình trạng:</div>
+          <div class="loan-info-value" id="modalStatus"></div>
+        </div>
+        
+      </div>
+
+      <h3>Danh sách tài liệu</h3>
+      <table class="borrow-table">
+        <thead>
+          <tr>
+            <th>Mã tài liệu</th>
+            <th>Tên tài liệu</th>
+            <th>Nhà xuất bản</th>
+            <th>Số lượng mượn</th>
+            <th>Tiền cọc</th>
+            <th>Số lượng trả</th>
+            <th>Phí vi phạm</th>
+            <th>Tình trạng</th>
+          </tr>
+        </thead>
+        <tbody id="modalLoanItems">
+          <!-- Dữ liệu sẽ được thêm vào đây bằng JavaScript -->
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3">TỔNG</td>
+            <td id="modalTotalQuantityBorrow">0</td>
+            <td id="modalTotalDeposit">0</td>
+            <td id="modalTotalQuantityReturn">0</td>
+            <td id="modalTotalViolation">0</td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <div class="modal-actions">
+        <button id="extendLoanBtn" class="btn-primary" onclick="extendLoan()">Gia hạn</button>
+        <button class="btn-secondary" onclick="closeModal()">Thoát</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/script.js"></script>
+</body>
+</html>

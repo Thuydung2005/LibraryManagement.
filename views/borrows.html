@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quản lý mượn trả</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+  <div class="sidebar">
+    <div class="profile">
+      <div class="avatar">👤</div>
+      <div class="username"><span id="usernameDisplay"></span></div>
+    </div>
+    <ul class="menu">
+      <li onclick="navigateTo('home.html')">Trang chủ</li>
+      <li onclick="navigateTo('account.html')">Quản lý tài khoản</li>
+      <li onclick="navigateTo('documents.html')">Quản lý tài liệu</li>
+      <li onclick="navigateTo('readers.html')">Quản lý độc giả</li>
+      <li class="active">Quản lý mượn trả</li>
+      <li onclick="navigateTo('reports.html')">Báo cáo - thống kê</li>
+    </ul>
+    <div class="logout-section">
+      <button class="logout-btn" onclick="logout()">Đăng xuất</button>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <!-- Danh sách phiếu mượn -->
+    <div id="borrowListSection">
+      <div class="account-header">
+        <h2>Danh sách phiếu mượn</h2>
+        <button class="add-btn" onclick="showBorrowForm()">Tạo phiếu mượn</button>
+      </div>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Tìm kiếm phiếu mượn" />
+        <i class="fas fa-search search-icon"></i>
+      </div>
+      <table class="account-table">
+        <thead>
+          <tr>
+            <th>Mã phiếu mượn</th>
+            <th>Mã độc giả</th>
+            <th>Ngày mượn</th>
+            <th>Ngày trả dự kiến</th>
+            <th>Ngày trả</th>
+            <th>Trạng thái</th>
+            <th>Xoá</th>
+            <th>Xem</th>
+          </tr>
+        </thead>
+        <tbody id="borrowTable"></tbody>
+      </table>
+    </div>
+
+    <!-- Form tạo phiếu mượn -->
+    <div class="add-account-section hidden" id="borrowFormSection">
+      <div class="account-form-container">
+        <h2 class="form-title">Lập phiếu mượn tài liệu</h2>
+        <form class="account-form">
+          <div class="form-grid">
+            <div class="form-left">
+              <div class="form-row">
+                <label for="borrowReaderCode">Mã độc giả</label>
+                <input type="text" id="borrowReaderCode" oninput="fetchReaderDetails('borrowReaderCode', 'borrowReaderName')" />
+              </div>
+              <div class="form-row">
+                <label for="borrowReaderName">Tên độc giả</label>
+                <input type="text" id="borrowReaderName" readonly />
+              </div>
+              <div class="form-row">
+                <label for="borrowDocumentCode">Mã tài liệu</label>
+                <input type="text" id="borrowDocumentCode" required />
+              </div>
+              <div class="form-row">
+                <label for="borrowQuantity">Số lượng mượn</label>
+                <input type="number" id="borrowQuantity" required />
+              </div>
+              <button type="button" class="btn-primary add-to-list" onclick="addToBorrowList()">Thêm vào danh sách</button>            </div>
+            <div class="form-right">
+              <table class="borrow-table">
+                <thead>
+                  <tr>
+                    <th>Mã tài liệu</th>
+                    <th>Tên tài liệu</th>
+                    <th>Số lượng mượn</th>
+                    <th>Tiền cọc</th>
+                    <th>Chỉnh sửa</th>
+                    <th>Xóa</th>
+                  </tr>
+                </thead>
+                <tbody id="borrowItemList"></tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="2">TỔNG</td>
+                    <td id="totalQuantity">0</td>
+                    <td id="totalDeposit">0</td>
+                    <td colspan="2"></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div class="form-row">
+            <label for="borrowDate">Ngày mượn</label>
+            <input type="date" id="borrowDate" required />
+          </div>
+          <div class="form-row">
+            <label for="returnDate">Ngày trả</label>
+            <input type="date" id="returnDate" required />
+          </div>
+          <div class="form-row">
+            <label for="borrowNote">Ghi chú</label>
+            <textarea id="borrowNote"></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn-primary" onclick="saveBorrow()">Tạo phiếu mượn</button>
+            <button type="button" class="btn-secondary" onclick="cancelBorrow()">Thoát</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  <!------Giao diện trả sách------->
+  <div class="return-book-section hidden" id="returnBookSection">
+    <h2>Thông tin phiếu mượn</h2>
+    <div class="form-grid">
+      <!-- Cột trái -->
+      <div class="form-left">
+        <div class="form-row">
+          <label for="returnBorrowId">Mã phiếu mượn</label>
+          <input type="text" id="returnBorrowId" readonly />
+        </div>
+        <div class="form-row">
+          <label for="returnReaderCode">Mã độc giả</label>
+          <input type="text" id="returnReaderCode" readonly />
+        </div>
+        <div class="form-row">
+          <label for="returnReaderName">Tên độc giả</label>
+          <input type="text" id="returnReaderName" readonly />
+        </div>
+        <div class="form-row">
+          <label for="returnBorrowDate">Ngày mượn</label>
+          <input type="date" id="returnBorrowDate" readonly />
+        </div>
+        <div class="form-row">
+          <label for="returnDueDate">Ngày trả dự kiến</label>
+          <input type="date" id="returnDueDate" readonly />
+        </div>
+        <div class="form-row">
+          <label for="returnDate">Ngày trả</label>
+          <input type="date" id="returnDate" readonly />
+        </div>
+      </div>
+  
+      <!-- Cột phải -->
+      <div class="form-right">
+        <table class="borrow-table">
+          <thead>
+            <tr>
+              <th>Mã tài liệu</th>
+              <th>Tên tài liệu</th>
+              <th>Số lượng mượn</th>
+              <th>Tiền cọc</th>
+              <th>Số lượng trả</th>
+              <th>Tình trạng sách</th>
+              <th>Phí vi phạm</th>
+            </tr>
+          </thead>
+          <tbody id="returnItemList"></tbody>
+        </table>
+      </div>
+    </div>
+  
+    <!-- Nút hành động -->
+    <div class="form-actions">
+      <button class="btn-confirm-return" onclick="confirmReturnSubmit()">Xác nhận trả</button>
+      <button class="btn-secondary" onclick="cancelReturn()">Thoát</button>
+    </div>
+  </div>
+  </div>
+  <script src="../assets/js/script.js"></script>
+</body>
+</html>

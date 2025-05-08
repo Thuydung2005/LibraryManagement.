@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thư viện công cộng</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+  <!-- Cập nhật phần menu trong header -->
+  <div class="public-header">
+    <div class="menu-container">
+      <div class="user-menu" onclick="toggleMenu()">
+        <i class="fas fa-user-circle user-avatar"></i>
+        <span id="usernameDisplay" class="user-name">Độc giả</span>
+      </div>
+      <!-- Add hamburger menu icon -->
+      <i class="fas fa-bars hamburger-menu" onclick="toggleMenu()"></i>
+      <!-- Dropdown menu -->
+      <div class="dropdown">
+        <div class="dropdown-content">
+          <a href="public.html">Trang chủ</a>
+          <a href="borrow-history.html">Lịch sử mượn trả</a>
+          <a href="#" onclick="logout()">Đăng xuất</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Banner thư viện -->
+  <div class="library-banner">
+    <img src="../assets/images/library-banner.png" alt="DMM Library" />
+    <div class="banner-text">WELCOME TO TMU LIBRARY</div>
+  </div>
+
+  <div class="main-content-public">
+    <!-- Thanh tìm kiếm -->
+    <div class="search-bar-reader">
+      <input type="text" id="searchInput" placeholder="Tìm kiếm tài liệu" />
+      <select id="searchType">
+        <option value="name">Tên tài liệu</option>
+        <option value="author">Tác giả</option>
+        <option value="category">Thể loại</option>
+        <option value="publisher">Nhà xuất bản</option>
+      </select>
+      <button class="search-button" onclick="searchDocuments()">
+        <i class="fas fa-search"></i> Tìm kiếm
+      </button>
+    </div>
+
+    <!-- Kết quả tìm kiếm -->
+    <div id="searchResults" class="search-results hidden">
+      <h2>Kết quả tìm kiếm</h2>
+      <div class="document-grid" id="documentGrid">
+        <!-- Kết quả tìm kiếm sẽ được thêm vào đây bằng JavaScript -->
+      </div>
+    </div>
+
+    <!-- Tài liệu nổi bật -->
+    <div class="featured-section">
+      <div class="featured-header">
+        <h2>Tài liệu nổi bật</h2>
+        <div class="featured-view-options">
+          <button class="view-option active" data-view="grid" onclick="changeView('grid')">
+            <i class="fas fa-th"></i>
+          </button>
+          <button class="view-option" data-view="list" onclick="changeView('list')">
+            <i class="fas fa-list"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="featured-categories">
+        <button class="category-btn active" data-category="all" onclick="filterCategory('all')">Tất cả</button>
+        <button class="category-btn" data-category="Công nghệ thông tin" onclick="filterCategory('Công nghệ thông tin')">Công nghệ thông tin</button>
+        <button class="category-btn" data-category="Toán học" onclick="filterCategory('Toán học')">Toán học</button>
+        <button class="category-btn" data-category="Kinh tế" onclick="filterCategory('Kinh tế')">Kinh tế</button>
+        <button class="category-btn" data-category="Ngoại ngữ" onclick="filterCategory('Ngoại ngữ')">Ngoại ngữ</button>
+      </div>
+
+      <div class="featured-container">
+        <button class="nav-btn prev-btn" onclick="navigateFeatured(-1)">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        
+        <div class="featured-slider grid-view" id="featuredSlider">
+          <!-- Tài liệu nổi bật sẽ được thêm vào đây bằng JavaScript -->
+        </div>
+        
+        <button class="nav-btn next-btn" onclick="navigateFeatured(1)">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+      
+      <div class="featured-pagination">
+        <span class="current-page">1</span> / <span class="total-pages">3</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal chi tiết tài liệu -->
+  <div id="documentModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeDocumentModal()">&times;</span>
+      <div class="document-details">
+        <div class="document-image">
+          <img id="modalDocumentImage" src="../assets/images/python.png?height=250&width=150" alt="Ảnh tài liệu" />
+        </div>
+        <div class="document-info">
+          <h2 id="modalDocumentTitle"></h2>
+          <p><strong>Tác giả:</strong> <span id="modalDocumentAuthor"></span></p>
+          <p><strong>Nhà xuất bản:</strong> <span id="modalDocumentPublisher"></span></p>
+          <p><strong>Năm xuất bản:</strong> <span id="modalDocumentYear"></span></p>
+          <p><strong>Thể loại:</strong> <span id="modalDocumentCategory"></span></p>
+          <p><strong>Số lượng có sẵn:</strong> <span id="modalDocumentQuantity"></span></p>
+          <p><strong>Giá tiền:</strong> <span id="modalDocumentPrice"></span></p>
+          <div class="document-actions">
+            <button id="borrowButton" class="action-btn borrow-btn" onclick="borrowDocument()">
+              <i class="fas fa-book"></i> Mượn sách
+            </button>
+            <button class="action-btn save-btn">
+              <i class="fas fa-bookmark"></i> Lưu
+            </button>
+            <button class="action-btn share-btn">
+              <i class="fas fa-share-alt"></i> Chia sẻ
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="document-description">
+        <h3>Mô tả tài liệu</h3>
+        <p id="modalDocumentDescription"></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Đăng nhập</title>
+  <link rel="stylesheet" href="../assets/css/style.css"/>
+</head>
+<body class="login-page">
+  <div class="login-container">
+    <h1 class="login-title">Hệ thống quản lý thư viện</h1>
+    <div class="login-box">
+      <!-- Form đăng nhập -->
+      <form id="loginForm">
+        <div class="input-group">
+          <input type="text" id="username" placeholder="Tên đăng nhập" required />
+        </div>
+        <div class="input-group">
+          <input type="password" id="password" placeholder="Mật khẩu" required />
+        </div>
+        <button type="submit" id="login-btn" class="login-btn">Đăng nhập</button>
+        <div class="forgot-password">
+          <a href="#" onclick="showForgotPassword()">Quên mật khẩu?</a>
+        </div>
+      </form>
+
+      <!-- Form quên mật khẩu -->
+      <form id="forgotForm" class="hidden">
+        <div class="input-group">
+          <input type="email" id="email" placeholder="Nhập email của bạn" required />
+        </div>
+        <button type="submit" class="login-btn">Gửi mã</button>
+        <div class="back-login">
+          <a href="#" onclick="showLogin()">Quay lại đăng nhập</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../assets/js/script.js"></script>
+</body>
+</html>

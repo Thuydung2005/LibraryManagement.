@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Báo cáo thống kê</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+    <div class="sidebar">
+        <div class="profile">
+          <div class="avatar">👤</div>
+          <div class="username"><span id="usernameDisplay"></span></div>
+        </div>
+        <ul class="menu">
+          <li onclick="navigateTo('home.html')">Trang chủ</li>
+          <li onclick="navigateTo('account.html')">Quản lý tài khoản</li>
+          <li onclick="navigateTo('documents.html')">Quản lý tài liệu</li>
+          <li onclick="navigateTo('readers.html')">Quản lý độc giả</li>
+          <li onclick="navigateTo('borrows.html')">Quản lý mượn trả</li>
+          <li class="active">Báo cáo - thống kê</li>
+        </ul>
+        <div class="logout-section">
+          <button class="logout-btn" onclick="logout()">Đăng xuất</button>
+        </div>
+      </div>
+      <div class="main-content">
+    <div class="account-header">
+    <h2>Báo cáo thống kê</h2>
+    <div class="report-options">
+      <button class="add-btn" onclick="showReaderReport()">Báo cáo độc giả</button>
+      <button class="add-btn" onclick="generateDocumentReport()">Báo cáo tài liệu</button>
+      <button class="add-btn" onclick="generateBorrowReturnReport()">Báo cáo mượn trả</button>
+    </div>
+    </div>
+    <div id="readerReportDashboard" class="hidden">
+      <h3 style="margin-top: 30px;">📊 Dashboard Độc giả</h3>
+    
+      <div class="dashboard-cards">
+        <div class="card" id="totalReadersCard">Tổng số độc giả: 0</div>
+        <div class="card" id="newReadersCard">Độc giả mới tháng này: 0</div>
+        <div class="card" id="totalAccessesCard">Tổng lượt truy cập: 0</div>
+      </div>
+    
+      <div class="charts-section">
+        <div class="chart-wrapper">
+          <canvas id="readersOverTimeChart" height="100"></canvas>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="accessesOverTimeChart" height="100"></canvas>
+        </div>
+        <div class="chart-wrapper" style="grid-column: span 2;">
+          <canvas id="topReadersChart" height="120"></canvas>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="../assets/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quản lý tài khoản</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+  <div class="sidebar">
+    <div class="profile">
+      <div class="avatar">👤</div>
+      <div class="username"><span id="usernameDisplay"></span></div>
+    </div>
+    <ul class="menu">
+      <li onclick="navigateTo('home.html')">Trang chủ</li>
+      <li class="active">Quản lý tài khoản</li>
+      <li onclick="navigateTo('documents.html')">Quản lý tài liệu</li>
+      <li onclick="navigateTo('readers.html')">Quản lý độc giả</li>
+      <li onclick="navigateTo('borrows.html')">Quản lý mượn trả</li>
+      <li onclick="navigateTo('reports.html')">Báo cáo - thống kê</li>
+    </ul>
+    <div class="logout-section">
+      <button class="logout-btn" onclick="logout()">Đăng xuất</button>
+    </div>
+  </div>
+
+  
+
+  <div class="main-content">
+    <!-- Danh sách tài khoản -->
+    <div id="accountListSection">
+      <div class="account-header">
+        <h2>Danh sách tài khoản trong hệ thống</h2>
+        <button class="add-btn" onclick="document.getElementById('addAccountSection').classList.remove('hidden');document.getElementById('accountListSection').classList.add('hidden');">Tạo tài khoản</button>
+      </div>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Tìm kiếm tài khoản" />
+        <i class="fas fa-search search-icon"></i>
+      </div>
+      <table class="account-table">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Tên tài khoản</th>
+            <th>Chủ tài khoản</th>
+            <th>Ngày tạo</th>
+            <th>Chỉnh sửa</th>
+            <th>Xoá</th>
+          </tr>
+        </thead>
+        <tbody id="accountTable"></tbody>
+      </table>
+    </div>
+
+    <!-- Form tạo tài khoản -->
+    <div class="add-account-section hidden" id="addAccountSection">
+      <div class="account-form-container">
+        <h2 class="form-title">Tạo tài khoản</h2>
+        <form class="account-form">
+          <div class="account-form-grid">
+            <div class="form-left">
+              <div class="form-row"><label for="newUsername">Tên tài khoản</label><input type="text" id="newUsername" required></div>
+              <div class="form-row"><label for="newOwner">Chủ tài khoản</label><input type="text" id="newOwner" readonly /></div>
+              <div class="form-row"><label for="newEmail">Email</label><input type="email" id="newEmail" readonly /></div>
+              <div class="form-row"><label for="newPassword">Mật khẩu</label><input type="password" id="newPassword" required></div>
+              <div class="form-row"><label for="confirmPassword">Xác nhận mật khẩu</label><input type="password" id="confirmPassword" required></div>
+            </div>
+            <div class="form-right">
+              <div class="form-row"><label for="newRole">Vai trò</label><select id="newRole" onchange="handleNewRoleChange()"><option value="Độc giả">Độc giả</option><option value="Thủ thư">Thủ thư</option></select></div>
+              <div class="form-row" id="readerCodeGroup"><label for="newReaderCode">Mã độc giả</label><input type="text" id="newReaderCode" oninput="fetchReaderDetails('newReaderCode', 'newOwner', 'newEmail')" /></div>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn-primary" onclick="saveNewAccount()">Lưu</button>
+            <button type="button" class="btn-secondary" onclick="navigateTo('account.html')">Thoát</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Form chỉnh sửa thông tin tài khoản -->
+    <div class="add-account-section hidden" id="editAccountSection">
+      <div class="account-form-container">
+        <h2 class="form-title">Thông tin tài khoản</h2>
+        <form class="account-form">
+          <div class="account-form-grid">
+            <div class="form-left">
+              <div class="form-row"><label for="infoUsername">Tên tài khoản</label><input type="text" id="infoUsername"></div>
+              <div class="form-row"><label for="infoPassword">Mật khẩu</label><input type="password" id="infoPassword"></div>
+              <div class="form-row"><label for="infoOwner">Chủ tài khoản</label><input type="text" id="infoOwner"></div>
+              <div class="form-row"><label for="infoEmail">Email</label><input type="email" id="infoEmail"></div>
+            </div>
+            <div class="form-right">
+              <div class="form-row"><label for="infoRole">Vai trò</label><select id="infoRole" onchange="handleInfoRoleChange()"><option value="Độc giả">Độc giả</option><option value="Thủ thư">Thủ thư</option></select></div>
+              <div class="form-row" id="infoReaderCodeGroup"><label for="infoReaderCode">Mã độc giả</label><input type="text" id="infoReaderCode"></div>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn-primary" onclick="updateAccount()">Cập nhật</button>
+            <button type="button" class="btn-danger" onclick="deleteAccountConfirmed()">Xoá</button>
+            <button type="button" class="btn-secondary" onclick="navigateTo('account.html')">Thoát</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/script.js"></script>
+</body>
+</html>

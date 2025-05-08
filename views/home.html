@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trang chủ - Hệ thống quản lý thư viện</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <div class="sidebar">
+    <div class="profile">
+      <div class="avatar">👤</div>
+      <div class="username"><span id="usernameDisplay"></span></div>
+    </div>
+    <ul class="menu">
+      <li class="active">Trang chủ</li>
+      <li onclick="navigateTo('account.html')">Quản lý tài khoản</li>
+      <li onclick="navigateTo('documents.html')"> Quản lý tài liệu</li>
+      <li onclick="navigateTo('readers.html')">Quản lý độc giả</li>
+      <li onclick="navigateTo('borrows.html')">Quản lý mượn trả</li>
+      <li onclick="navigateTo('reports.html')">Báo cáo - thống kê</li>
+    </ul>
+    <div class="logout-section">
+      <button class="logout-btn" onclick="logout()">Đăng xuất</button>
+    </div>
+  </div>
+  <div class="main-content">
+    <h1>Chào mừng bạn đến với Hệ thống Quản lý Thư viện!</h1>
+    <p>Xin chào <strong><span id="usernameDisplay"></span></strong>, bạn đang truy cập hệ thống thư viện nội bộ.</p>    <div class="library-info">
+      <h2>📚 Giới thiệu thư viện</h2>
+      <p>
+        Thư viện Trường Đại học XYZ là trung tâm lưu trữ và cung cấp tri thức cho sinh viên, giảng viên và nhà nghiên cứu. 
+        Với hơn <strong>100.000 đầu sách</strong> cùng hàng ngàn tài liệu điện tử, thư viện là nơi hỗ trợ đắc lực cho học tập, giảng dạy và nghiên cứu khoa học.
+      </p>
+      <p>
+        Không gian thư viện được thiết kế hiện đại, yên tĩnh, phục vụ nhu cầu học nhóm, làm việc cá nhân và tra cứu tài liệu. 
+        Hệ thống quản lý thư viện trực tuyến giúp bạn dễ dàng tra cứu, đặt mượn và theo dõi tình trạng tài liệu mọi lúc mọi nơi.
+      </p>
+      <p>
+        Chúng tôi cam kết không ngừng cải tiến để mang đến trải nghiệm tốt nhất cho người dùng. 
+        Nếu bạn cần hỗ trợ, đừng ngần ngại liên hệ với cán bộ thư viện hoặc qua hệ thống trợ giúp.
+      </p>
+    </div>
+  
+    <div class="tips">
+      <h2>🛠️ Hướng dẫn sử dụng nhanh</h2>
+      <ul>
+        <li><strong>Quản lý tài khoản:</strong> Thêm, sửa, xoá và phân quyền người dùng.</li>
+        <li><strong>Quản lý tài liệu:</strong> Cập nhật danh mục sách, giáo trình và tài liệu học tập.</li>
+        <li><strong>Quản lý độc giả:</strong> Theo dõi thông tin, tình trạng mượn/trả của từng người đọc.</li>
+        <li><strong>Quản lý mượn trả:</strong> Xử lý phiếu mượn, trả sách, và nhắc hạn trả.</li>
+        <li><strong>Báo cáo - Thống kê:</strong> Xem thống kê mượn sách, tình trạng kho và tổng hợp dữ liệu.</li>
+      </ul>
+      <p>Nếu bạn là người dùng mới, hãy bắt đầu bằng việc truy cập <em>Quản lý tài liệu</em> để cập nhật danh mục sách trước tiên.</p>
+    </div>
+  </div>
+  <script src="../assets/js/script.js"></script>
+</body>
+</html>
